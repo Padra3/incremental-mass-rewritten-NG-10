@@ -140,7 +140,8 @@ const CHALS = {
         else if (x < 13) return "Entering challenge will supernova reset."
         else if (x < 16) return "Entering challenge will force a Darkness reset."
         else if (x == 16) return "Entering challenge will force an FSS reset."
-        return "Entering challenge will force an Infinity reset."
+        else if (x < 21) return "Entering challenge will force an Infinity reset."
+        return "Entering challenge will force an Eternity reset."
     },
     getMax(i) {
         if (i <= 12 && hasPrestige(2,25)) return EINF 

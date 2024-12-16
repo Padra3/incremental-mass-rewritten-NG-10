@@ -103,7 +103,7 @@ const TREE_UPGS = {
         sn2: {
             branch: ["sn1"],
             desc: `Supernova boosts Neutron Star gain.`,
-            cost: E(350),
+            cost: E(35),
             effect() {
                 let sn = player.supernova.times
                 if (!hasTree("qu4")) sn = sn.softcap(15,0.8,0).softcap(25,0.5,0)
@@ -117,7 +117,7 @@ const TREE_UPGS = {
             desc: `Blue stars boost Neutron star gain at a reduced rate.`,
             req() { return player.supernova.times.gte(6) },
             reqDesc: `6 Supernovas.`,
-            cost: E(50000),
+            cost: E(50),
             effect() {
                 let x = player.stars.generators[4].max(1).log10().add(1)
                 return x
@@ -130,7 +130,7 @@ const TREE_UPGS = {
             unl() { return player.supernova.post_10 },
             req() { return player.supernova.times.gte(13) },
             reqDesc: `13 Supernovas.`,
-            cost: E(1e8),
+            cost: E(1000),
             effect() {
                 let x = player.supernova.times.mul(0.1).softcap(1.5,0.75,0)
                 if (hasElement(112)) x = x.add(2)
@@ -142,7 +142,7 @@ const TREE_UPGS = {
             branch: ["sn4"],
             desc: `Mass boosts Neutron Stars gain.`,
             unl() { return quUnl() },
-            cost: E('e450'),
+            cost: E('e10'),
             effect() {
                 let x = player.mass.add(1).log10().add(1).pow(2)
                 return x
@@ -168,13 +168,13 @@ const TREE_UPGS = {
         m2: {
             branch: ["m1"],
             desc: `Raise the Mass requirement for softcap^2 by 1.5`,
-            cost: E(800),
+            cost: E(120),
         },
         m3: {
             branch: ["m2"],
             unl() { return player.supernova.fermions.unl && hasTree("fn1") },
             desc: `Mass gain softcap^2-3 starts later based on Supernovas.`,
-            cost: E(1e46),
+            cost: E(10000),
             effect() {
                 let x = player.supernova.times.mul(0.0125).add(1)
                 return x
@@ -186,12 +186,12 @@ const TREE_UPGS = {
             req() { return player.supernova.chal.noTick && player.mass.gte(E("1.5e1.650056e6").pow(hasTree('bh2')?1.46:1)) },
             reqDesc() {return `Reach ${formatMass(E("1.5e1.650056e6").pow(hasTree('bh2')?1.46:1))} without buying Tickspeed in a Supernova run. You can still obtain Tickspeed from Cosmic Rays.`},
             desc: `Tickspeed Power is raised to the 1.15th.`,
-            cost: E(1500),
+            cost: E(150),
         },
         rp1: {
             branch: ["c"],
             desc: `Neutron Stars multiplies Rage Powers gain`,
-            cost: E(200),
+            cost: E(100),
             effect() {
                 let x = hasElement(165)
                 ? player.supernova.stars.add(1).log10().add(1).log10().div(10).add(1)
@@ -203,7 +203,7 @@ const TREE_UPGS = {
         bh1: {
             branch: ["c"],
             desc: `Neutron Star multiplies Dark Matters gain.`,
-            cost: E(400),
+            cost: E(50),
             effect() {
                 let x = hasElement(166)
                 ? player.supernova.stars.add(1).log10().add(1).log10().div(10).add(1)
@@ -222,7 +222,7 @@ const TREE_UPGS = {
         s1: {
             branch: ["c"],
             desc: `Neutron Star boosts last star gain.`,
-            cost: E(400),
+            cost: E(200),
             effect() {
                 let x = player.supernova.stars.add(1).pow(1.4)
                 return x

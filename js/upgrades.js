@@ -51,10 +51,10 @@ const UPGS = {
             } else {
                 fp = tmp.massFP
                 
-                if (i == 1 && player.ranks.rank.gte(2)) inc = inc.pow(0.8)
-                if (i == 2 && player.ranks.rank.gte(3)) inc = inc.pow(0.8)
-                if (i == 3 && player.ranks.rank.gte(4)) inc = inc.pow(0.8)
-                if (player.ranks.tier.gte(3)) inc = inc.pow(0.8)
+                if (i == 1 && player.ranks.rank.gte(2)) inc = inc.pow(0.1)
+                if (i == 2 && player.ranks.rank.gte(3)) inc = inc.pow(0.1)
+                if (i == 3 && player.ranks.rank.gte(4)) inc = inc.pow(0.1)
+                if (player.ranks.tier.gte(3)) inc = inc.pow(0.1)
                 cost = inc.pow(lvl.div(fp).scaleEvery("massUpg")).mul(start)
                 bulk = E(0)
                 if (player.mass.gte(start)) bulk = player.mass.div(start).max(1).log(inc).scaleEvery("massUpg",true).mul(fp).add(1).floor()
@@ -66,7 +66,7 @@ const UPGS = {
             unl() { return player.ranks.rank.gte(1) || player.mainUpg.atom.includes(1) },
             title: "Muscler",
             start: E(10),
-            inc: E(1.5),
+            inc: E(1.1),
             effect(x) {
                 let step = E(1)
                 if (player.ranks.rank.gte(3)) step = step.add(RANKS.effect.rank[3]())
@@ -93,7 +93,7 @@ const UPGS = {
             unl() { return player.ranks.rank.gte(2) || player.mainUpg.atom.includes(1) },
             title: "Booster",
             start: E(100),
-            inc: E(4),
+            inc: E(1.5),
             effect(x) {
                 let step = E(2)
                 if (player.ranks.rank.gte(5)) step = step.add(RANKS.effect.rank[5]())
@@ -120,7 +120,7 @@ const UPGS = {
             unl() { return player.ranks.rank.gte(3) || player.mainUpg.atom.includes(1) },
             title: "Stronger",
             start: E(1000),
-            inc: E(9),
+            inc: E(2),
             effect(x) {
                 let xx = hasAscension(0,1)?x.add(1).mul(tmp.upgs.mass[3].bonus.add(1)):x.add(tmp.upgs.mass[3].bonus)
                 if (hasElement(81)) xx = xx.pow(1.1)

@@ -68,17 +68,17 @@ const RANKS = {
     desc: {
         rank: {
             '1': "unlock mass upgrade 1.",
-            '2': "unlock mass upgrade 2, reduce mass upgrade 1 scaling by 20%.",
-            '3': "unlock mass upgrade 3, reduce mass upgrade 2 scaling by 20%, and mass upgrade 1 boosts itself.",
-            '4': "reduce mass upgrade 3 scaling by 20%.",
-            '5': "mass upgrade 2 boosts itself.",
+            '2': "unlock mass upgrade 2, reduce mass upgrade 1 scaling by 90%.",
+            '3': "unlock mass upgrade 3, reduce mass upgrade 2 scaling by 90%, and mass upgrade 1 boosts itself at increased rate.",
+            '4': "reduce mass upgrade 3 scaling by 90%.",
+            '5': "mass upgrade 2 boosts itself at increased rate.",
             '6': "boost mass gain by (x+1)^2, where x is rank.",
             '13': "triple mass gain.",
             '14': "double Rage Powers gain.",
             '17': "Rank 6 reward effect is better. [(x+1)^2 -> (x+1)^x^1/3]",
             '34': "mass upgrade 3 softcaps 1.2x later.",
-            '40': "adds tickspeed power based on ranks.",
-            '45': "rank boosts Rage Powers gain.",
+            '40': "adds tickspeed power based on ranks At Increased rate.",
+            '45': "rank boosts Rage Powers gain at increased rate.",
             '90': "rank 40 reward is stronger.",
             '180': "mass gain is raised by 1.025.",
             '220': "rank 40 reward is overpowered.",
@@ -91,7 +91,7 @@ const RANKS = {
             '2': "raise mass gain by 1.15",
             '3': "reduce all mass upgrade scalings by 20%.",
             '4': "adds +5% tickspeed power for every tier you have, softcaps at +40%.",
-            '6': "boost rage powers based on tiers.",
+            '6': "boost rage powers based on tiers at exponential Rate.",
             '8': "Tier 6's reward is boosted based on dark matters.",
             '12': "Tier 4's reward is twice as effective and the softcap is removed.",
             '30': "stronger effect's softcap is 10% weaker.",
@@ -132,11 +132,11 @@ const RANKS = {
     effect: {
         rank: {
             '3'() {
-                let ret = player.build.mass_1.amt.div(20)
+                let ret = player.build.mass_1.amt.div(0.25)
                 return ret
             },
             '5'() {
-                let ret = player.build.mass_2.amt.div(40)
+                let ret = player.build.mass_2.amt.div(0.25)
                 return ret
             },
             '6'() {
@@ -144,13 +144,13 @@ const RANKS = {
                 return ret
             },
             '40'() {
-                let ret = player.ranks.rank.root(2).div(100)
-                if (player.ranks.rank.gte(90)) ret = player.ranks.rank.root(1.6).div(100)
-                if (player.ranks.rank.gte(220)) ret = player.ranks.rank.div(100)
+                let ret = player.ranks.rank.root(4).div(100)
+                if (player.ranks.rank.gte(90)) ret = player.ranks.rank.root(2.9).div(100)
+                if (player.ranks.rank.gte(220)) ret = player.ranks.rank.root(2).div(100)
                 return ret
             },
             '45'() {
-                let ret = player.ranks.rank.add(1).pow(1.5)
+                let ret = player.ranks.rank.add(1).pow(3)
                 return ret
             },
             '300'() {
@@ -158,7 +158,7 @@ const RANKS = {
                 return ret
             },
             '380'() {
-                let ret = E(10).pow(player.ranks.rank.sub(379).pow(1.5).pow(player.ranks.tier.gte(55)?RANKS.effect.tier[55]():1).softcap(1000,0.5,0))
+                let ret = E(10).pow(player.ranks.rank.sub(379).pow(3).pow(player.ranks.tier.gte(55)?RANKS.effect.tier[55]():1).softcap(1000,0.5,0))
                 return ret
             },
             '800'() {
@@ -174,7 +174,7 @@ const RANKS = {
                 return ret
             },
             '6'() {
-                let ret = E(2).pow(player.ranks.tier)
+                let ret = E(2).pow(player.ranks.tier).pow(2)
                 if (player.ranks.tier.gte(8)) ret = ret.pow(RANKS.effect.tier[8]())
                 return overflow(ret,'ee100',0.5).overflow('ee40000',0.25,2)
             },
